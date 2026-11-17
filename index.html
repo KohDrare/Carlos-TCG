@@ -164,11 +164,57 @@ function sync3D(b,c){if(!b)return;b.hidden=!has3D(c);b.classList.toggle('on',is3
 .vw-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:84px 14px 64px;touch-action:manipulation;perspective:1100px}
 .vw-card{position:relative;height:min(100%,calc((100vw - 28px) * 88 / 63));aspect-ratio:63/88;border-radius:4.5%/3.3%;overflow:hidden;will-change:transform;box-shadow:0 30px 70px #000000a6;touch-action:none;user-select:none;-webkit-user-select:none}
 .vw-hint{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);text-align:center;color:#ffffffb3;font-size:14px;pointer-events:none}
+/* ---------- Intro : classeur fermé qui s'ouvre au scroll ---------- */
+#intro{position:fixed;inset:0;z-index:500;background:#0e0c0a;color:#f3ece0}
+#inBg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+#intro .in-veil{position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#0e0c0acc 0%,#0e0c0a66 30%,#0e0c0a55 70%,#0e0c0acc 100%)}
+#intro .in-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;z-index:2;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#intro .in-scroll::-webkit-scrollbar{display:none}
+#intro .in-spacer{height:340vh}
+#intro .in-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:1800px;z-index:1;pointer-events:none}
+.in-binder{--w:min(78vw,calc(64dvh*.74));position:relative;width:var(--w);aspect-ratio:.74;perspective:1600px;perspective-origin:30% 50%;will-change:transform}
+.in-page,.in-cover,.in-face{position:absolute;inset:0;border-radius:3% 5% 5% 3%/2.2% 3.6% 3.6% 2.2%}
+.in-page{z-index:1;background:linear-gradient(160deg,#241e18,#14110d);box-shadow:0 30px 80px #000a,inset 0 0 0 2px #ffffff14;padding:7% 6% 7% 9%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3.5%}
+.in-page i{opacity:var(--co,0);display:block;border-radius:5%/3.6%;background:#ffffff14 center/cover no-repeat;box-shadow:0 3px 8px #0006,inset 0 0 0 1px #ffffff1f}
+.in-cover{z-index:2;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+.in-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.in-front{background:
+  radial-gradient(120% 90% at 30% 20%,#3a2e22 0%,#211a13 45%,#0e0b08 100%);
+  box-shadow:0 40px 90px #000c,inset 0 0 0 2px #ffffff1a,inset 0 0 60px #0008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%}
+.in-front:before{content:"";position:absolute;inset:3.2%;border:2px dashed #c9a45c99;border-radius:2.4%/1.8%;pointer-events:none}
+.in-front:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,#ffffff06 0 2px,transparent 2px 6px),linear-gradient(115deg,transparent 35%,#ffffff1c 48%,transparent 60%);background-size:auto,250% 100%;background-position:0 0,var(--sh,100%) 0;pointer-events:none}
+.in-spine{position:absolute;left:0;top:0;bottom:0;width:9%;background:linear-gradient(90deg,#070504,#2a2119 60%,#0f0c09);box-shadow:inset -3px 0 6px #0008}
+.in-badge{width:44%;aspect-ratio:1;margin-left:7%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f8e9b8,#c9a45c 45%,#6e5020 100%);box-shadow:0 10px 24px #000a,inset 0 0 0 4px #00000040,inset 0 0 0 9px #f8e9b855;display:grid;place-items:center;font:900 calc(var(--w)*.2)/1 Georgia,serif;color:#2a1d0c;text-shadow:0 1px 0 #f8e9b8}
+.in-title{margin-left:7%;text-align:center;font:900 clamp(16px,calc(var(--w)*.085),44px)/1 Inter;letter-spacing:.04em;background:linear-gradient(180deg,#f8e9b8,#d8b46a 50%,#9c7632);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #1a120a) drop-shadow(0 0 1px #1a120a)}
+.in-title small{display:block;font-size:.5em;letter-spacing:.3em;margin-bottom:.25em}
+.in-strap{position:absolute;right:-1.5%;top:50%;width:13%;height:12%;transform:translateY(-50%);border-radius:6px 0 0 6px;background:linear-gradient(180deg,#d8b46a,#8a6a2c);box-shadow:0 4px 10px #0007,inset 0 0 0 2px #ffffff33}
+.in-strap:after{content:"";position:absolute;left:22%;top:30%;width:28%;height:40%;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#c9ced9 50%,#7d869c)}
+.in-back{transform:rotateY(180deg);background:linear-gradient(200deg,#2a2119,#0e0b08);box-shadow:inset 0 0 0 2px #ffffff14,inset -20px 0 40px #0006}
+.in-back:after{content:"CARLOS TCG · COLLECTION";position:absolute;left:0;right:0;bottom:8%;text-align:center;font:700 clamp(8px,calc(var(--w)*.03),13px) 'JetBrains Mono',monospace;letter-spacing:.2em;color:#ffffff59}
+.in-hint{position:absolute;left:0;right:0;bottom:calc(28px + env(safe-area-inset-bottom,0px));text-align:center;font:700 14px Inter;letter-spacing:.06em;opacity:.85;z-index:1;pointer-events:none}
+.in-hint b{display:block;font-size:22px;margin-top:6px;animation:inb 1.4s ease-in-out infinite}
+@keyframes inb{50%{transform:translateY(7px)}}
+.in-skip{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:3;height:36px;padding:0 16px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff1a;color:#fff;font:700 13px Inter;cursor:pointer;backdrop-filter:blur(6px)}
+.bview.pre{opacity:0;transform:scale(.94)}
+.bview{transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1)}
 </style>
 </head>
 <body>
 <div class="bgfill" aria-hidden="true"></div>
-<div class="bview" id="bview">
+<div id="intro" aria-label="Intro">
+  <canvas id="inBg"></canvas><div class="in-veil"></div>
+  <div class="in-stage"><div class="in-binder" id="inBinder">
+    <div class="in-page" id="inPage"></div>
+    <div class="in-cover" id="inCover">
+      <div class="in-face in-front"><div class="in-spine"></div><div class="in-badge">C</div><div class="in-title"><small>COLLECTION</small>CARLOS</div><div class="in-strap"></div></div>
+      <div class="in-face in-back"></div>
+    </div>
+  </div></div>
+  <div class="in-hint" id="inHint">Fais défiler pour ouvrir<b>↓</b></div>
+  <div class="in-scroll" id="inScroll"><div class="in-spacer"></div></div>
+  <button class="in-skip" id="inSkip">Passer</button>
+</div>
+<div class="bview pre" id="bview">
   <div class="bv-bar">
     <h2><span id="title">CarlosClasseur</span><small id="cnt"></small></h2>
     <div class="bv-tools">
@@ -324,6 +370,7 @@ const COLORS=['#0e0c0a','#16181d','#1b1410','#0f1724','#1a0f1f','#0f1a14','#240c
 const colors=$('#colors');
 const NOISE="url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 const BGS=[
+  {id:'terrain',name:'Terrain',base:'#0e0c0a',css:'linear-gradient(180deg,#0e0c0acc 0%,#0e0c0a66 30%,#0e0c0a55 70%,#0e0c0acc 100%),url(frames/f145.jpg) center/cover no-repeat'},
   {id:'cuir',name:'Cuir noir',base:'#0e0c0a',css:`${NOISE},radial-gradient(ellipse 120% 80% at 50% 35%,#2a221a 0%,#14110d 55%,#060504 100%)`},
   {id:'velours',name:'Velours bordeaux',base:'#14070a',css:`${NOISE},radial-gradient(ellipse 120% 80% at 50% 35%,#3a1118 0%,#1c080c 55%,#070203 100%)`},
   {id:'nuit',name:'Nuit',base:'#0a0e1a',css:`${NOISE},radial-gradient(ellipse 120% 80% at 50% 30%,#1c2440 0%,#0d1222 55%,#03050a 100%)`},
@@ -333,14 +380,51 @@ function setColor(c){
   if(bg){root.style.setProperty('--bv-img',bg.css);root.classList.add('has-img');root.style.setProperty('--bv-bg',bg.base)}
   else{root.classList.remove('has-img');root.style.setProperty('--bv-bg',c)}
   document.querySelector('meta[name=theme-color]').content=bg?bg.base:c;
-  [...colors.querySelectorAll('.bv-sw')].forEach(b=>b.classList.toggle('on',b.dataset.c===c));LS.set('carlos-color',c)}
+  [...colors.querySelectorAll('.bv-sw')].forEach(b=>b.classList.toggle('on',b.dataset.c===c));LS.set('carlos-bg',c)}
 colors.innerHTML=BGS.map(b=>`<button class="bv-sw img" data-c="${b.id}" aria-label="Fond ${b.name}"></button>`).join('')
   +'<span class="bv-sep"></span>'+COLORS.map(c=>`<button class="bv-sw" data-c="${c}" style="background:${c}" aria-label="Couleur"></button>`).join('');
 BGS.forEach(b=>colors.querySelector(`[data-c="${b.id}"]`).style.background=b.css);
 colors.onclick=e=>{const b=e.target.closest('.bv-sw');if(b)setColor(b.dataset.c)};
 $('#colorBtn').onclick=()=>{colors.classList.toggle('show');render(0)};
-setColor(LS.get('carlos-color')||'cuir');
+setColor((v=>v&&(COLORS.includes(v)||BGS.some(b=>b.id===v))?v:'terrain')(LS.get('carlos-bg')));
 render(0);
+
+/* ---------- Intro ---------- */
+(function(){
+  const intro=$('#intro'); if(!intro)return;
+  const page=$('#inPage'), sc=$('#inScroll'), binder=$('#inBinder'), cover=$('#inCover'), hint=$('#inHint'), bv=$('#bview');
+  $('#inPage').innerHTML=Array.from({length:9},(_,i)=>{const c=ORDER[i]>=0?CARDS[ORDER[i]]:null;return `<i style="${c?`background-image:url(${IMG[c.n-1]})`:''}"></i>`}).join('');
+  const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)), ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  const cv=$('#inBg'), cx=cv.getContext('2d'), NF=145, fr=new Array(NF), ok=new Array(NF).fill(false); let last=-1;
+  function ld(i){const im=new Image();im.decoding='async';im.onload=()=>{ok[i]=true;if(!raf)raf=requestAnimationFrame(frame)};im.src='frames/f'+String(i+1).padStart(3,'0')+'.jpg';fr[i]=im}
+  ld(0);ld(NF-1);for(let st=16;st>=1;st>>=1)for(let i=0;i<NF;i+=st)if(!fr[i])ld(i);
+  function size(){const d=Math.min(devicePixelRatio,2);cv.width=Math.round(innerWidth*d);cv.height=Math.round(innerHeight*d);last=-1}
+  size();addEventListener('resize',()=>{size();frame()});
+  function drawBg(fi){let i=fi;if(!ok[i]){let b=-1;for(let d=1;d<NF;d++){if(i-d>=0&&ok[i-d]){b=i-d;break}if(i+d<NF&&ok[i+d]){b=i+d;break}}if(b<0)return;i=b}
+    if(i===last)return;const im=fr[i],W=cv.width,H=cv.height,s=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;
+    cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);last=i}
+  let raf=0, done=false;
+  function finish(){if(done)return;done=true;cancelAnimationFrame(raf);bv.classList.remove('pre');sc.style.pointerEvents='none';intro.style.pointerEvents='none';intro.style.transition='opacity .45s';intro.style.opacity=0;setTimeout(()=>intro.remove(),480)}
+  function frame(){raf=0;if(done)return;
+    const max=sc.scrollHeight-sc.clientHeight, p=max>0?sc.scrollTop/max:0;
+    const t1=ease(cl((p-.04)/.5)), t2=ease(cl((p-.66)/.16));
+    drawBg(Math.round(cl(p/.8)*(NF-1)));
+    const w=binder.offsetWidth, fit=Math.min(1,.94*innerWidth/(2*w));
+    const s=(1-(1-fit)*t1)*(1+t2*.35), x=w*.5*t1*(1-t2)*s;
+    binder.style.transform=`translateX(${x}px) scale(${s})`;
+    cover.style.transform=`rotateY(${-178*t1}deg)`;
+    cover.style.setProperty('--sh',(100-p*400)+'%');
+    binder.style.opacity=1-t2;
+    page.style.setProperty('--co',cl((t1-.42)/.18));
+    hint.style.opacity=cl(1-p*6)*.85;
+    if(t2>.35)bv.classList.remove('pre'); else bv.classList.add('pre');
+    if(t2>=.999)finish();
+  }
+  sc.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
+  $('#inSkip').onclick=finish;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)finish();
+  frame();
+})();
 
 /* ---------- Mode modification ---------- */
 let editing=false;
